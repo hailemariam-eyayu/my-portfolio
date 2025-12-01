@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Hailemariam Eyayu</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .app-wrapper {
+      min-height: 100%;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .bg-white {
+      background-color: #2a2a2a !important;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .text-gray-800 {
+      color: #e0e0e0 !important;
+    }
+
+    body.dark-mode .text-gray-600 {
+      color: #b0b0b0 !important;
+    }
+
+    body.dark-mode .border-gray-200 {
+      border-color: #404040 !important;
+    }
+
+    body.dark-mode .bg-gray-100 {
+      background-color: #333333 !important;
+    }
+
+    body.dark-mode .bg-light {
+      background-color: #1f1f1f !important;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: left 0.3s ease;
+      z-index: 1050;
+      overflow-y: auto;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1040;
+      display: none;
+    }
+
+    .sidebar-overlay.show {
+      display: block;
+    }
+
+    .navbar {
+      padding: 1rem 0;
+    }
+
+    .content-wrapper {
+      padding-top: 80px;
+    }
+
+    .section-padding {
+      padding: 4rem 0;
+    }
+
+    .hero-section {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .profile-image-placeholder {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      margin: 0 auto 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border: 5px solid white;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skill-card {
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-image-placeholder {
+        width: 200px;
+        height: 200px;
+        font-size: 100px;
+      }
+      
+      .hero-section {
+        min-height: 60vh;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-wrapper"><!-- Sidebar Overlay -->
+   <div class="sidebar-overlay" id="sidebarOverlay"></div><!-- Sidebar -->
+   <div class="sidebar" id="sidebar">
+    <div class="p-4">
+     <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="text-white m-0">Menu</h5><button class="btn btn-sm btn-light" id="closeSidebar">✕</button>
+     </div>
+     <ul class="nav flex-column gap-2">
+      <li class="nav-item"><a class="nav-link text-white" href="#hero">Home</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#about">About</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#skills">Skills</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#portfolio">Portfolio</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#downloads">Downloads</a></li>
+      <li class="nav-item"><a class="nav-link text-white" href="#contact">Contact</a></li>
+     </ul>
+    </div>
+   </div><!-- Header -->
+   <nav class="navbar navbar-expand-lg fixed-top shadow-sm navbar-dark" id="navbar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container-fluid"><button class="btn btn-primary d-lg-none me-2" id="toggleSidebar" aria-label="Toggle sidebar"> <span class="navbar-toggler-icon"></span> </button> <a class="navbar-brand fw-bold" href="#" id="siteTitle">Hailemariam Eyayu</a>
+     <div class="collapse navbar-collapse d-none d-lg-block" id="navbarTop">
+      <ul class="navbar-nav ms-auto gap-2 align-items-center">
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#hero">Home</a></li>
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#about">About</a></li>
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#skills">Skills</a></li>
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#portfolio">Portfolio</a></li>
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#downloads">Downloads</a></li>
+       <li class="nav-item"><a class="nav-link px-3 py-2 rounded text-white" href="#contact">Contact</a></li>
+       <li class="nav-item"><button id="darkModeToggle" class="btn btn-outline-light rounded-circle p-2 border" style="width: 38px; height: 38px;">
+         <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="5" /> <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M17.36 17.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M17.36 6.64l1.42-1.42" stroke="currentColor" strokewidth="2" strokelinecap="round" strokelinejoin="round" />
+         </svg>
+         <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24" width="20" height="20" style="display: none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+         </svg></button></li>
+      </ul>
+     </div>
+    </div>
+   </nav><!-- Main Content -->
+   <div class="content-wrapper"><!-- Hero Section with Profile -->
+    <section id="hero" class="hero-section">
+     <div class="container">
+      <div class="row align-items-center">
+       <div class="col-lg-6 text-center text-lg-start" data-aos="fade-right">
+        <div class="profile-image-placeholder">
+         👤
+        </div>
+        <h1 class="display-3 fw-bold mb-3" id="profileName">Hailemariam Eyayu</h1>
+        <p class="lead fs-4 mb-4" id="profileTagline">Full Stack Developer &amp; Designer</p>
+        <div class="d-flex gap-3 justify-content-center justify-content-lg-start"><a href="#contact" class="btn btn-light btn-lg px-4">Hire Me</a> <a href="#portfolio" class="btn btn-outline-light btn-lg px-4">View Work</a>
+        </div>
+       </div>
+       <div class="col-lg-6 text-center mt-5 mt-lg-0" data-aos="fade-left">
+        <div class="p-4">
+         <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 400 300" style="max-width: 100%; height: auto;"><rect width="400" height="300" fill="#ffffff" opacity="0.1" rx="20" /> <circle cx="200" cy="100" r="60" fill="#ffffff" opacity="0.2" /> <rect x="150" y="180" width="100" height="80" fill="#ffffff" opacity="0.2" rx="10" /> <text x="200" y="250" text-anchor="middle" font-size="60" fill="#ffffff" opacity="0.3">
+           💻
+          </text>
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- About Section -->
+    <section id="about" class="section-padding bg-light">
+     <div class="container">
+      <div data-aos="fade-up">
+       <h2 class="display-4 fw-bold mb-4" id="aboutTitle">About Me</h2>
+       <p class="lead" id="aboutDescription">I'm a passionate developer creating amazing digital experiences. With expertise in modern web technologies, I bring ideas to life through clean code and beautiful design.</p>
+      </div>
+     </div>
+    </section><!-- Skills Section -->
+    <section id="skills" class="section-padding">
+     <div class="container">
+      <h2 class="display-4 fw-bold mb-5 text-center" data-aos="fade-up" id="skillsTitle">My Skills</h2>
+      <div class="row g-4">
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           ⚛️
+          </div>
+          <h3 class="h4 fw-semibold mb-3">React</h3>
+          <p class="text-muted">Modern UI library for building interactive user interfaces</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           📱
+          </div>
+          <h3 class="h4 fw-semibold mb-3">Flutter</h3>
+          <p class="text-muted">Cross-platform mobile app development framework</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🟨
+          </div>
+          <h3 class="h4 fw-semibold mb-3">JavaScript</h3>
+          <p class="text-muted">Dynamic programming language for web applications</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="250">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🔴
+          </div>
+          <h3 class="h4 fw-semibold mb-3">Laravel</h3>
+          <p class="text-muted">Elegant PHP framework for web artisans</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🗄️
+          </div>
+          <h3 class="h4 fw-semibold mb-3">MySQL</h3>
+          <p class="text-muted">Reliable relational database management system</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="350">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🍃
+          </div>
+          <h3 class="h4 fw-semibold mb-3">MongoDB</h3>
+          <p class="text-muted">NoSQL database with flexible document structure</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           📊
+          </div>
+          <h3 class="h4 fw-semibold mb-3">JSON Handling</h3>
+          <p class="text-muted">Expert in data serialization and API integration</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="450">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🔐
+          </div>
+          <h3 class="h4 fw-semibold mb-3">Role-Based Auth</h3>
+          <p class="text-muted">Secure authentication and authorization systems</p>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="skill-card bg-white shadow-lg rounded-xl p-4 border border-gray-200 h-100">
+         <div class="text-center">
+          <div class="display-1 mb-3">
+           🐘
+          </div>
+          <h3 class="h4 fw-semibold mb-3">Mongoose</h3>
+          <p class="text-muted">MongoDB object modeling for Node.js</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Portfolio Section -->
+    <section id="portfolio" class="section-padding bg-light">
+     <div class="container">
+      <h2 class="display-4 fw-bold mb-5 text-center" data-aos="fade-up" id="portfolioTitle">My Portfolio</h2>
+      <div class="portfolio-grid" id="portfolioGrid"><!-- Portfolio items will be dynamically added -->
+      </div>
+     </div>
+    </section><!-- Downloads Section -->
+    <section id="downloads" class="section-padding">
+     <div class="container">
+      <div class="text-center" data-aos="fade-up">
+       <h2 class="display-4 fw-bold mb-4">Downloads</h2>
+       <p class="lead mb-4">Get my resume and other professional documents</p><button class="btn btn-lg px-5" id="downloadBtn"> 📄 Download Resume </button>
+      </div>
+     </div>
+    </section><!-- Contact Section -->
+    <section id="contact" class="section-padding bg-light">
+     <div class="container">
+      <h2 class="display-4 fw-bold mb-5 text-center" data-aos="fade-up" id="contactTitle">Get In Touch</h2>
+      <div class="row justify-content-center">
+       <div class="col-lg-6">
+        <div class="bg-white shadow-lg rounded-xl p-5" data-aos="fade-up">
+         <form id="contactForm">
+          <div class="mb-3"><label for="name" class="form-label">Name</label> <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3"><label for="email" class="form-label">Email</label> <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="mb-3"><label for="message" class="form-label">Message</label> <textarea class="form-control" id="message" rows="5" required></textarea>
+          </div><button type="submit" class="btn w-100" id="submitBtn">Send Message</button>
+         </form>
+         <div class="mt-4 text-center">
+          <p class="mb-2">Or email me directly at:</p><a href="mailto:contact@example.com" class="fw-semibold" id="contactEmail" style="color: #0d6efd;">contact@example.com</a>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_title: "Hailemariam Eyayu",
+      profile_name: "Hailemariam Eyayu",
+      profile_tagline: "Full Stack Developer & Designer",
+      about_title: "About Me",
+      about_description: "I'm a passionate developer creating amazing digital experiences. With expertise in modern web technologies, I bring ideas to life through clean code and beautiful design.",
+      skills_title: "My Skills",
+      portfolio_title: "My Portfolio",
+      contact_title: "Get In Touch",
+      contact_email: "contact@example.com",
+      primary_color: "#667eea",
+      secondary_color: "#764ba2",
+      accent_color: "#0d6efd",
+      font_family: "system-ui, -apple-system, sans-serif",
+      font_size: 16
+    };
+
+    let isDarkMode = false;
+
+    const portfolioItems = [
+      {
+        title: "E-Commerce Platform",
+        description: "A full-featured online shopping platform with payment integration",
+        url: "https://example.com",
+        category: "web"
+      },
+      {
+        title: "Task Management App",
+        description: "Collaborative task manager with real-time updates",
+        url: "https://example.com",
+        category: "web"
+      },
+      {
+        title: "Portfolio Website",
+        description: "Modern portfolio showcase with smooth animations",
+        url: "https://example.com",
+        category: "design"
+      }
+    ];
+
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+
+    toggleSidebar.addEventListener('click', function() {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('show');
+    });
+
+    closeSidebar.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('show');
+    });
+
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('show');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          sidebar.classList.remove('open');
+          sidebarOverlay.classList.remove('show');
+        }
+      });
+    });
+
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+
+    darkModeToggle.addEventListener('click', function() {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('dark-mode');
+      
+      if (isDarkMode) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    });
+
+    function renderPortfolio() {
+      const portfolioGrid = document.getElementById('portfolioGrid');
+      portfolioGrid.innerHTML = '';
+      
+      portfolioItems.forEach(function(item, index) {
+        const card = document.createElement('div');
+        card.className = 'portfolio-item';
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', (index * 100).toString());
+        card.innerHTML = `
+          <div class="bg-white shadow-lg rounded-xl overflow-hidden flex flex-col h-full border border-gray-200 hover:shadow-2xl transition-shadow duration-300">
+            <div class="p-6 flex-grow">
+              <h3 class="text-2xl font-semibold text-gray-800 mb-3">${item.title}</h3>
+              <p class="text-gray-600">${item.description}</p>
+            </div>
+            <div class="bg-gray-100 px-6 py-4">
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="inline-block text-center w-full text-white px-4 py-2 rounded transition duration-300 portfolio-btn" style="background-color: #0d6efd;">
+                View Project
+              </a>
+            </div>
+          </div>
+        `;
+        portfolioGrid.appendChild(card);
+      });
+      
+      AOS.refresh();
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const successMsg = document.createElement('div');
+      successMsg.className = 'alert alert-success mt-3';
+      successMsg.textContent = 'Thank you! Your message has been sent successfully.';
+      contactForm.appendChild(successMsg);
+      
+      contactForm.reset();
+      
+      setTimeout(function() {
+        successMsg.remove();
+      }, 3000);
+    });
+
+    async function onConfigChange(config) {
+      const baseSize = config.font_size || defaultConfig.font_size;
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'system-ui, -apple-system, sans-serif';
+      
+      document.getElementById('siteTitle').textContent = config.site_title || defaultConfig.site_title;
+      document.getElementById('profileName').textContent = config.profile_name || defaultConfig.profile_name;
+      document.getElementById('profileTagline').textContent = config.profile_tagline || defaultConfig.profile_tagline;
+      document.getElementById('aboutTitle').textContent = config.about_title || defaultConfig.about_title;
+      document.getElementById('aboutDescription').textContent = config.about_description || defaultConfig.about_description;
+      document.getElementById('skillsTitle').textContent = config.skills_title || defaultConfig.skills_title;
+      document.getElementById('portfolioTitle').textContent = config.portfolio_title || defaultConfig.portfolio_title;
+      document.getElementById('contactTitle').textContent = config.contact_title || defaultConfig.contact_title;
+      document.getElementById('contactEmail').textContent = config.contact_email || defaultConfig.contact_email;
+      document.getElementById('contactEmail').href = 'mailto:' + (config.contact_email || defaultConfig.contact_email);
+      
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      
+      const navbar = document.getElementById('navbar');
+      navbar.style.background = 'linear-gradient(135deg, ' + primaryColor + ' 0%, ' + secondaryColor + ' 100%)';
+      
+      const sidebarEl = document.getElementById('sidebar');
+      sidebarEl.style.background = 'linear-gradient(135deg, ' + primaryColor + ' 0%, ' + secondaryColor + ' 100%)';
+      
+      const heroSection = document.querySelector('.hero-section');
+      heroSection.style.background = 'linear-gradient(135deg, ' + primaryColor + ' 0%, ' + secondaryColor + ' 100%)';
+      
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.style.backgroundColor = accentColor;
+      downloadBtn.style.borderColor = accentColor;
+      downloadBtn.className = 'btn btn-lg px-5';
+      
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.style.backgroundColor = accentColor;
+      submitBtn.style.borderColor = accentColor;
+      submitBtn.className = 'btn w-100';
+      
+      document.getElementById('contactEmail').style.color = accentColor;
+      
+      document.querySelectorAll('.portfolio-btn').forEach(function(el) {
+        el.style.backgroundColor = accentColor;
+      });
+      
+      document.body.style.fontFamily = customFont + ', ' + baseFontStack;
+      
+      document.querySelectorAll('.display-3').forEach(function(el) {
+        el.style.fontSize = (baseSize * 2.5) + 'px';
+      });
+      
+      document.querySelectorAll('.display-4').forEach(function(el) {
+        el.style.fontSize = (baseSize * 2) + 'px';
+      });
+      
+      document.querySelectorAll('.lead').forEach(function(el) {
+        el.style.fontSize = (baseSize * 1.2) + 'px';
+      });
+      
+      document.body.style.fontSize = baseSize + 'px';
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: function() { return config.primary_color || defaultConfig.primary_color; },
+            set: function(value) {
+              if (window.elementSdk) {
+                window.elementSdk.config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            }
+          },
+          {
+            get: function() { return config.secondary_color || defaultConfig.secondary_color; },
+            set: function(value) {
+              if (window.elementSdk) {
+                window.elementSdk.config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          },
+          {
+            get: function() { return config.accent_color || defaultConfig.accent_color; },
+            set: function(value) {
+              if (window.elementSdk) {
+                window.elementSdk.config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: function() { return config.font_family || defaultConfig.font_family; },
+          set: function(value) {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          }
+        },
+        fontSizeable: {
+          get: function() { return config.font_size || defaultConfig.font_size; },
+          set: function(value) {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_title", config.site_title || defaultConfig.site_title],
+        ["profile_name", config.profile_name || defaultConfig.profile_name],
+        ["profile_tagline", config.profile_tagline || defaultConfig.profile_tagline],
+        ["about_title", config.about_title || defaultConfig.about_title],
+        ["about_description", config.about_description || defaultConfig.about_description],
+        ["skills_title", config.skills_title || defaultConfig.skills_title],
+        ["portfolio_title", config.portfolio_title || defaultConfig.portfolio_title],
+        ["contact_title", config.contact_title || defaultConfig.contact_title],
+        ["contact_email", config.contact_email || defaultConfig.contact_email]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: onConfigChange,
+        mapToCapabilities: mapToCapabilities,
+        mapToEditPanelValues: mapToEditPanelValues
+      });
+    }
+
+    renderPortfolio();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a71ea47810b1d43',t:'MTc2NDU4NTA4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
